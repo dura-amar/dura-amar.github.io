@@ -30,7 +30,7 @@
       body,
       header,
       footer {
-        background-image: url("bg.jpg");
+        background-image: url("bg.png");
         background-size: cover;
         background-position: center;
       }
@@ -39,6 +39,23 @@
         position: sticky;
         top: 0;
         z-index: 100;
+      }
+      .changing-text {
+        font-family: "Roboto", sans-serif;
+        font-size: 24px; /* Adjust font size as needed */
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease-in-out; /* Smooth fade */
+      }
+
+      .changing-text.show {
+        opacity: 1; /* Shown */
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
       }
     </style>
   </head>
@@ -58,8 +75,11 @@
       <section
         class="flex flex-col items-center justify-center text-center mb-8"
       >
-        <h2 class="text-3xl font-semibold">
-          Computer Engineering Undergrad | Developer
+        <h2 class="text-3xl font-semibold">Computer Engineering Undergrad</h2>
+        <h2 class="text-3xl">
+          <span class="changing-text text-3xl" id="changingText">
+            Developer</span
+          >
         </h2>
         <p class="text-gray-600">
           Connecting indigenous communities with technology.
@@ -402,5 +422,28 @@
     <footer class="text-center p-4 bg-gray-100 shadow-md">
       <p>Amar Dura &copy; 2025. All Rights Reserved.</p>
     </footer>
+
+    <script>
+      const changingText = document.getElementById("changingText");
+      const words = ["Developer", "IPs", "Designer", "Scout", "Clean Code"];
+      let currentWordIndex = 0;
+
+      function changeWord() {
+        changingText.classList.remove("show"); // Fade out
+
+        setTimeout(() => {
+          changingText.textContent = words[currentWordIndex];
+          changingText.classList.add("show"); // Fade in
+
+          currentWordIndex = (currentWordIndex + 1) % words.length; // Cycle through words
+          setTimeout(changeWord, 1500); // Change every 2.5 seconds (adjust as needed)
+        }, 500); // Delay for fade out
+      }
+
+      changingText.textContent = words[0]; // Set initial text
+      changingText.classList.add("show"); // Show initial text
+
+      setTimeout(changeWord, 1500); // Start the word changing cycle after a delay
+    </script>
   </body>
 </html>
