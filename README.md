@@ -1,1 +1,1 @@
-# dura-amar.github.io
+# Using Github Pages with .np domain

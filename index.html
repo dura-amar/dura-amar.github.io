@@ -3,87 +3,404 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
+
+    <title>Amar Dura - Portfolio</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Apply Poppins as default font */
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Set title to Impact font */
+      h1,
+      h2,
+      h3 {
+        font-family: "Roboto", sans-serif;
+      }
+
+      body,
+      header,
+      footer {
+        background-image: url("bg.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 text-gray-900">
-    <div class="max-w-3xl mx-auto p-8">
-      <header class="text-center mb-8">
-        <h1 class="text-4xl font-bold">Your Name</h1>
-        <p class="text-gray-600">Computer Engineering Undergrad | Developer</p>
-      </header>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <header class="bg-gray-100 shadow-md p-4">
+      <nav class="max-w-3xl mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Amar Dura</h1>
+        <ul class="flex space-x-4" aria-label="Main navigation">
+          <li><a href="#skills" class="hover:underline">Skills</a></li>
+          <li><a href="#projects" class="hover:underline">Projects</a></li>
+          <li><a href="#contact" class="hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
 
-      <section class="mb-8">
+    <main class="max-w-3xl mx-auto p-8">
+      <section
+        class="flex flex-col items-center justify-center text-center mb-8"
+      >
+        <h2 class="text-3xl font-semibold">
+          Computer Engineering Undergrad | Developer
+        </h2>
+        <p class="text-gray-600">
+          Connecting indigenous communities with technology.
+        </p>
+        <a
+          href="cv.pdf"
+          download="Amar_Dura_Resume.pdf"
+          class="inline-flex items-center px-4 py-2 rounded-md text-blue hover:bg-blue-600 hover:text-white"
+        >
+          <i class="fas fa-download mr-2"></i>Download CV
+        </a>
+      </section>
+
+      <section id="skills" class="mb-8">
         <h2 class="text-2xl font-semibold">Skills</h2>
-        <ul class="list-disc pl-5 text-gray-700">
-          <li>Programming: C, C++, Python, Java</li>
-          <li>Web: HTML, CSS, JavaScript, Tailwind</li>
-          <li>Tools: Git, VS Code, Android Studio</li>
-        </ul>
+        <div class="flex flex-wrap gap-3 text-gray-700">
+          <span
+            class="flex items-center gap-2 bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-java"></i> Java
+          </span>
+          <span
+            class="flex items-center gap-2 bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-cuttlefish"></i> C
+          </span>
+          <span
+            class="flex items-center gap-2 bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-cpp"></i> C++
+          </span>
+          <span
+            class="flex items-center gap-2 bg-green-100 text-green-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-react"></i> React
+          </span>
+          <span
+            class="flex items-center gap-2 bg-green-100 text-green-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-flutter"></i> Flutter
+          </span>
+          <span
+            class="flex items-center gap-2 bg-yellow-100 text-yellow-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fas fa-database"></i> SQL
+          </span>
+          <span
+            class="flex items-center gap-2 bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-solidity"></i> Solidity
+          </span>
+          <span
+            class="flex items-center gap-2 bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-hardhat"></i> Hardhat
+          </span>
+          <span
+            class="flex items-center gap-2 bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-node"></i> Node
+          </span>
+          <span
+            class="flex items-center gap-2 bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-ethereum"></i> Ethereum
+          </span>
+          <span
+            class="flex items-center gap-2 bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-figma"></i> Figma
+          </span>
+          <span
+            class="flex items-center gap-2 bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-git"></i> Git
+          </span>
+          <span
+            class="flex items-center gap-2 bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm"
+          >
+            <i class="fab fa-github"></i> GitHub
+          </span>
+        </div>
       </section>
 
-      <section class="mb-8">
-        <h2 class="text-2xl font-semibold">Projects</h2>
-        <ul class="list-disc pl-5 text-gray-700">
-          <li><a href="#" class="text-blue-600">Project 1</a> - Description</li>
-          <li><a href="#" class="text-blue-600">Project 2</a> - Description</li>
-        </ul>
+      <section id="timeline" class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Projects</h2>
+        <div class="relative">
+          <!-- Timeline Line -->
+          <div class="absolute left-0 top-0 w-1 bg-gray-300 h-full"></div>
+
+          <!-- Event 1 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2025
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://dura-lopa-web.onrender.com/"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >Dura Lopa Web App</a
+              >
+              <p class="text-sm text-gray-700">
+                Making Dura language resources accessible.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-react"></i
+                ></span>
+                <span
+                  class="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-node"></i
+                ></span>
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-figma"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 2 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2024
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://dura-lopa-web.onrender.com/"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >Dura Lopa App</a
+              >
+              <p class="text-sm text-gray-700">
+                Offline Dura-Nepali-English dictionary.
+              </p>
+
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-flutter"></i>Flutter</span
+                >
+                <span
+                  class="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-android"></i
+                ></span>
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-figma"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 3 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2024
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/dura-garage/kiratapp"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >Kirati Cluster App</a
+              >
+              <p class="text-sm text-gray-700">
+                Collaborated with Dr. Taramani Rai to prepare a common Kirati
+                dictionary.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-flutter"></i>Flutter</span
+                >
+                <span
+                  class="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-android"></i
+                ></span>
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-figma"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 4 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2023
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/dura-amar/nep-spell-streamlit"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >Nepali Spell Corrector</a
+              >
+              <p class="text-sm text-gray-700">
+                Fine-tuned transformer models with our dataset for Nepali
+                spelling correction.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-html"></i>HTML</span
+                >
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-python"></i
+                ></span>
+                <span
+                  class="bg-green-100 text-yellow-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-js"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 5 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2022
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="#"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >IDverse</a
+              >
+              <p class="text-sm text-gray-700">
+                Ethereum-based project for student identity management.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-hardhat"></i>Hardhat</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-ethereum"></i
+                ></span>
+
+                <span
+                  class="bg-green-100 text-yellow-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-react"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 6 -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+            >
+              2018
+            </div>
+            <div class="ml-4 md:ml-8">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="#"
+                class="text-lg font-semibold text-blue-600 hover:underline"
+                >Constitution of Nepal - 2072</a
+              >
+              <p class="text-sm text-gray-700">
+                Android app for the Constitution of Nepal.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-java"></i
+                ></span>
+                <span
+                  class="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-android"></i
+                ></span>
+
+                <span
+                  class="bg-green-100 text-yellow-700 py-1 px-3 rounded-full text-xs"
+                  ><i class="fab fa-google-play"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section class="mb-8">
+      <section id="contact" class="mb-8">
         <h2 class="text-2xl font-semibold">Contact</h2>
-        <p>
-          Email:
-          <a href="mailto:your.email@example.com" class="text-blue-600"
-            >your.email@example.com</a
+
+        <div class="flex flex-col lg:flex-row lg:space-x-6 text-gray-700">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:dura.email@gmail.com"
+            class="text-blue-600 hover:underline flex items-center"
           >
-        </p>
-        <p>
-          GitHub:
-          <a href="https://github.com/yourgithub" class="text-blue-600"
-            >yourgithub</a
+            <i class="fas fa-envelope mr-2"></i>dura.email@gmail.com
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/dura-amar"
+            class="text-blue-600 hover:underline flex items-center"
           >
-        </p>
-        <p>
-          LinkedIn:
-          <a href="https://linkedin.com/in/yourlinkedin" class="text-blue-600"
-            >yourlinkedin</a
+            <i class="fab fa-github mr-2"></i>dura-amar
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://linkedin.com/in/amar-dura/"
+            class="text-blue-600 hover:underline flex items-center"
           >
-        </p>
+            <i class="fab fa-linkedin mr-2"></i>amar-dura
+          </a>
+        </div>
       </section>
-    </div>
+    </main>
+
+    <footer class="text-center p-4 bg-gray-100 shadow-md">
+      <p>Amar Dura &copy; 2025. All Rights Reserved.</p>
+    </footer>
   </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Your Name</h1>
-        <p>Web Developer | Flutter Developer | Tech Enthusiast</p>
-        <nav>
-            <ul>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <section>
-        <h2>Welcome to My Portfolio</h2>
-        <p>Hi! I'm [Your Name], a passionate developer building modern web and mobile applications.</p>
-        <a href="projects.html" class="btn">View My Work</a>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Your Name | All Rights Reserved</p>
-    </footer>
-</body>
-</html> -->
