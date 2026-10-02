@@ -1,204 +1,515 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amar Dura - Portfolio</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amar Dura | Computer Engineer building tools for indigenous languages</title>
+  <meta name="description" content="Amar Dura is a computer engineering undergraduate building dictionaries, apps and language tools for the Dura language and other indigenous communities in Nepal." />
+  <meta property="og:title" content="Amar Dura | Portfolio" />
+  <meta property="og:description" content="Dictionaries, apps and language tools for indigenous communities." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0f4c45" />
 
-    <!-- Fonts & Icons -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      // Tailwind dark mode class strategy
-      tailwind.config = {
-        darkMode: "class",
-      };
-    </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            river: { DEFAULT: "#0f4c45", light: "#1d7a6e", dark: "#0a332e" },
+            marigold: "#e3a21a",
+            paper: "#f4f6f3",
+            ink: "#15221f",
+          },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Hanken Grotesk", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+    // Apply saved/system theme before paint to avoid a flash
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) document.documentElement.classList.add("dark");
+      } catch (e) {}
+    })();
+  </script>
 
-    <style>
-      * {
-        font-family: "Poppins", sans-serif;
-      }
-      h1, h2, h3 {
-        font-family: "Montserrat", sans-serif;
-      }
-      .changing-text {
-        transition: opacity 0.6s ease-in-out;
-        opacity: 0;
-      }
-      .changing-text.show {
-        opacity: 1;
-      }
-    </style>
-  </head>
+  <style>
+    body { font-family: "Hanken Grotesk", system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: "Fraunces", Georgia, serif; }
+    :focus-visible { outline: 3px solid #e3a21a; outline-offset: 2px; border-radius: 6px; }
+    .role-word { transition: opacity .5s ease; }
+    .role-word.hide { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      .role-word { transition: none; }
+    }
+    .skip-link { position: absolute; left: -999px; top: 8px; z-index: 100; }
+    .skip-link:focus { left: 8px; }
+    .modal-enter { animation: pop .18s ease-out; }
+    @keyframes pop { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .modal-enter { animation: none; } }
+  </style>
+</head>
 
-  <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-    <!-- Header -->
-    <header class="sticky top-0 bg-white dark:bg-gray-800 shadow-md z-50 transition-colors duration-500">
-      <nav class="max-w-5xl mx-auto flex justify-between items-center px-6 py-4">
-        <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">Amar Dura</h1>
-        <ul class="flex space-x-6 font-medium">
-          <li><a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400">Skills</a></li>
-          <li><a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400">Projects</a></li>
-          <li><a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400">Contact</a></li>
-<li>
-  <a href="https://amardura.com.np/duralopa.app/"
-     class="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition">
-     Dura Lopa App
-  </a>
-</li>
-            </ul>
-        <!-- Dark Mode Toggle -->
-        <button id="themeToggle" class="ml-6 p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-          <i id="themeIcon" class="fas fa-moon text-gray-700 dark:text-gray-200"></i>
+<body class="bg-paper text-ink dark:bg-[#0c1614] dark:text-gray-100 antialiased transition-colors duration-300">
+  <a href="#main" class="skip-link bg-white text-ink px-3 py-2 rounded shadow">Skip to content</a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-ink/10 dark:border-white/10 bg-paper/90 dark:bg-[#0c1614]/90 backdrop-blur">
+    <nav class="max-w-5xl mx-auto flex items-center justify-between px-5 py-3" aria-label="Main">
+      <a href="#top" class="font-display text-xl font-bold text-river dark:text-emerald-300">Amar Dura</a>
+
+      <ul class="hidden md:flex items-center gap-7 text-[15px] font-medium">
+        <li><a class="hover:text-river dark:hover:text-emerald-300" href="#about">About</a></li>
+        <li><a class="hover:text-river dark:hover:text-emerald-300" href="#skills">Skills</a></li>
+        <li><a class="hover:text-river dark:hover:text-emerald-300" href="#projects">Projects</a></li>
+        <li><a class="hover:text-river dark:hover:text-emerald-300" href="#contact">Contact</a></li>
+        <li>
+          <a href="https://amardura.com.np/duralopa.app/" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-river text-white hover:bg-river-light transition">
+            Dura Lopa App
+          </a>
+        </li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" type="button" aria-label="Switch to dark mode" class="w-10 h-10 rounded-md border border-ink/15 dark:border-white/15 hover:bg-ink/5 dark:hover:bg-white/10 transition">
+          <i id="themeIcon" class="fas fa-moon" aria-hidden="true"></i>
         </button>
-      </nav>
-    </header>
+        <button id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden w-10 h-10 rounded-md border border-ink/15 dark:border-white/15">
+          <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-ink/10 dark:border-white/10 px-5 pb-4">
+      <ul class="flex flex-col gap-1 pt-2 font-medium">
+        <li><a class="block py-2" href="#about">About</a></li>
+        <li><a class="block py-2" href="#skills">Skills</a></li>
+        <li><a class="block py-2" href="#projects">Projects</a></li>
+        <li><a class="block py-2" href="#contact">Contact</a></li>
+        <li><a class="block py-2 text-river dark:text-emerald-300" href="https://amardura.com.np/duralopa.app/">Dura Lopa App</a></li>
+      </ul>
+    </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="text-center py-16 bg-gradient-to-br from-blue-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 transition-colors duration-500">
-      <h2 class="text-4xl font-bold mb-2">Computer Engineering Undergrad</h2>
-      <h2 class="text-3xl mb-4 text-blue-600 dark:text-blue-400">
-        <span class="changing-text" id="changingText">Developer</span>
-      </h2>
-      <p class="max-w-xl mx-auto text-gray-600 dark:text-gray-300 mb-6">
-        Connecting <span class="italic bg-green-100 dark:bg-green-800">indigenous communities</span> with technology.
+  <main id="main">
+    <!-- Hero -->
+    <section id="top" class="max-w-5xl mx-auto px-5 pt-16 pb-14 md:pt-24 md:pb-20">
+      <p class="text-river dark:text-emerald-300 font-medium mb-4">Computer Engineering undergraduate</p>
+      <h1 class="font-display text-4xl md:text-6xl font-bold leading-[1.1] max-w-3xl">
+        I build software so indigenous languages can live on phones and the web.
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-ink/75 dark:text-gray-300 max-w-2xl">
+        I work as a <span id="roleWord" class="role-word font-semibold text-river dark:text-emerald-300" aria-live="off">developer</span>
+        on dictionaries, language apps and language technology for the Dura community and its neighbours.
       </p>
-      <a
-        href="cv.pdf"
-        download="Amar_Dura_Resume.pdf"
-        class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-      >
-        <i class="fas fa-download mr-2"></i> Download CV
-      </a>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#projects" class="px-5 py-3 rounded-md bg-river text-white font-medium hover:bg-river-light transition">See my projects</a>
+        <a href="cv.pdf" download="Amar_Dura_Resume.pdf" class="px-5 py-3 rounded-md border border-ink/20 dark:border-white/25 font-medium hover:bg-ink/5 dark:hover:bg-white/10 transition">
+          <i class="fas fa-download mr-2" aria-hidden="true"></i>Download CV
+        </a>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="border-t border-ink/10 dark:border-white/10">
+      <div class="max-w-5xl mx-auto px-5 py-14 grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12">
+        <h2 class="font-display text-3xl font-bold">About</h2>
+        <div class="space-y-4 text-lg leading-relaxed text-ink/80 dark:text-gray-300 max-w-[65ch]">
+          <p>
+            I am studying computer engineering and spend most of my time on one question:
+            how can technology help small language communities keep their language in everyday use?
+          </p>
+          <p>
+            My work so far includes an offline Dura-Nepali-English dictionary, a web app for Dura language resources,
+            a shared dictionary for the Kirati cluster of languages, and a Nepali spelling corrector built on fine-tuned transformer models.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="max-w-5xl mx-auto px-6 py-16">
-      <h2 class="text-3xl font-bold mb-8">Skills</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-java text-3xl text-blue-600"></i>
-          <p class="mt-2">Java</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fa-solid fa-code text-3xl text-blue-600"></i>
-          <p class="mt-2">C / C++</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-react text-3xl text-cyan-400"></i>
-          <p class="mt-2">React</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-flutter text-3xl text-sky-400"></i>
-          <p class="mt-2">Flutter</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fas fa-database text-3xl text-yellow-600"></i>
-          <p class="mt-2">SQL</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-ethereum text-3xl text-gray-400"></i>
-          <p class="mt-2">Ethereum</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-figma text-3xl text-pink-500"></i>
-          <p class="mt-2">Figma</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-          <i class="fab fa-github text-3xl text-black dark:text-gray-200"></i>
-          <p class="mt-2">Git & GitHub</p>
+    <section id="skills" class="bg-white dark:bg-[#101d1a] border-y border-ink/10 dark:border-white/10">
+      <div class="max-w-5xl mx-auto px-5 py-14">
+        <h2 class="font-display text-3xl font-bold mb-8">Skills</h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          <div>
+            <h3 class="font-display text-lg font-bold mb-3">Languages</h3>
+            <ul class="space-y-2" id="skillsLang"></ul>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-bold mb-3">Frameworks and data</h3>
+            <ul class="space-y-2" id="skillsFw"></ul>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-bold mb-3">Design and tools</h3>
+            <ul class="space-y-2" id="skillsTools"></ul>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="bg-gray-100 dark:bg-gray-800 py-16 transition-colors duration-500">
-      <div class="max-w-5xl mx-auto px-6">
-        <h2 class="text-3xl font-bold mb-8">Projects</h2>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400">Dura Lopa Web App (2025)</h3>
-            <p class="text-gray-600 dark:text-gray-300 mt-2">Making Dura language resources accessible.</p>
-            <a href="https://dura-lopa-web.onrender.com/" target="_blank"
-               class="text-sm text-blue-500 hover:underline">View Project →</a>
-          </div>
-
-          <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400">Dura Lopa App (2024)</h3>
-            <p class="text-gray-600 dark:text-gray-300 mt-2">Offline Dura-Nepali-English dictionary.</p>
-             <a href="https://play.google.com/store/apps/details?id=org.durapetodss.duralopa&pcampaignid=web_share" target="_blank"
-               class="text-sm text-blue-500 hover:underline">View App →</a>
-          </div>
-
-          <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400">Kirati Cluster App (2024)</h3>
-            <p class="text-gray-600 dark:text-gray-300 mt-2">Collaborated on a common Kirati dictionary.</p>
-          </div>
-
-          <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-blue-600 dark:text-blue-400">Nepali Spell Corrector (2023)</h3>
-            <p class="text-gray-600 dark:text-gray-300 mt-2">Fine-tuned transformer models for spelling correction.</p>
-          </div>
+    <section id="projects" class="max-w-5xl mx-auto px-5 py-14">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="font-display text-3xl font-bold">Projects</h2>
+          <p class="mt-2 text-ink/70 dark:text-gray-400">Tools for language preservation, plus research and community work.</p>
         </div>
+        <div id="filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter projects"></div>
+      </div>
+
+      <div id="projectGrid" class="grid gap-5 md:grid-cols-2"></div>
+      <p id="emptyState" class="hidden text-ink/70 dark:text-gray-400 py-8">No projects match this filter yet.</p>
+
+      <!-- Owner panel: visible only at /#admin -->
+      <div id="adminPanel" class="hidden mt-10 rounded-lg border-2 border-dashed border-marigold p-5 bg-marigold/10">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+          <h3 class="font-display text-xl font-bold">Manage projects</h3>
+          <button id="closeAdmin" type="button" class="text-sm underline">Exit manage mode</button>
+        </div>
+        <p class="text-sm text-ink/75 dark:text-gray-300 mb-4 max-w-[70ch]">
+          Projects you add here are saved in <strong>this browser only</strong>. To show them to every visitor,
+          choose <em>Copy as code</em> and paste the result into the <code>projects</code> list in this file's script, then upload the file again.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button id="openAdd" type="button" class="px-4 py-2 rounded-md bg-river text-white font-medium hover:bg-river-light transition">
+            <i class="fas fa-plus mr-2" aria-hidden="true"></i>Add project
+          </button>
+          <button id="copyCode" type="button" class="px-4 py-2 rounded-md border border-ink/25 dark:border-white/25 font-medium">Copy as code</button>
+          <button id="exportJson" type="button" class="px-4 py-2 rounded-md border border-ink/25 dark:border-white/25 font-medium">Download JSON</button>
+          <label class="px-4 py-2 rounded-md border border-ink/25 dark:border-white/25 font-medium cursor-pointer">
+            Import JSON<input id="importJson" type="file" accept="application/json" class="sr-only" />
+          </label>
+        </div>
+        <p id="adminMsg" class="mt-3 text-sm" role="status"></p>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="max-w-5xl mx-auto px-6 py-16 text-center">
-      <h2 class="text-3xl font-bold mb-6">Contact</h2>
-      <div class="flex flex-col md:flex-row gap-4 justify-center">
-        <a href="mailto:dura.email@gmail.com" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-          <i class="fas fa-envelope mr-2"></i> dura.email@gmail.com
-        </a>
-        <a href="https://github.com/dura-amar" target="_blank" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-          <i class="fab fa-github mr-2"></i> dura-amar
-        </a>
-        <a href="https://linkedin.com/in/amar-dura/" target="_blank" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-          <i class="fab fa-linkedin mr-2"></i> amar-dura
-        </a>
+    <section id="contact" class="bg-river text-white">
+      <div class="max-w-5xl mx-auto px-5 py-14">
+        <h2 class="font-display text-3xl font-bold">Contact</h2>
+        <p class="mt-3 text-white/85 max-w-[55ch]">
+          Working on a language project, or want to collaborate on research? Email is the quickest way to reach me.
+        </p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-6">
+          <a class="inline-flex items-center gap-2 underline underline-offset-4 hover:text-marigold" href="mailto:dura.email@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i>dura.email@gmail.com</a>
+          <a class="inline-flex items-center gap-2 underline underline-offset-4 hover:text-marigold" href="https://github.com/dura-amar" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i>dura-amar</a>
+          <a class="inline-flex items-center gap-2 underline underline-offset-4 hover:text-marigold" href="https://linkedin.com/in/amar-dura/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i>amar-dura</a>
+        </div>
       </div>
     </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-200 dark:bg-gray-800 py-6 text-center text-gray-700 dark:text-gray-300 transition-colors duration-500">
-      <p>© 2025 Amar Dura. All Rights Reserved.</p>
-    </footer>
+  <footer class="bg-river-dark text-white/70 text-sm">
+    <div class="max-w-5xl mx-auto px-5 py-5 flex flex-wrap justify-between gap-2">
+      <p>&copy; <span id="year">2025</span> Amar Dura. All rights reserved.</p>
+      <a href="#top" class="hover:text-white">Back to top</a>
+    </div>
+  </footer>
 
-    <!-- Word Changing Script -->
-    <script>
-      const changingText = document.getElementById("changingText");
-      const words = ["Developer", "Engineer", "Designer", "Researcher", "Scout"];
-      let currentWordIndex = 0;
-      function changeWord() {
-        changingText.classList.remove("show");
-        setTimeout(() => {
-          changingText.textContent = words[currentWordIndex];
-          changingText.classList.add("show");
-          currentWordIndex = (currentWordIndex + 1) % words.length;
-        }, 400);
-      }
-      setInterval(changeWord, 2000);
-      changingText.classList.add("show");
+  <!-- Add project modal -->
+  <div id="modal" class="hidden fixed inset-0 z-50 bg-black/60 items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <form id="projectForm" class="modal-enter w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg bg-white dark:bg-[#14231f] text-ink dark:text-gray-100 p-6 shadow-xl">
+      <h3 id="modalTitle" class="font-display text-2xl font-bold mb-4">Add a project</h3>
 
-      // Dark mode toggle
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-      themeToggle.addEventListener("click", () => {
-        document.documentElement.classList.toggle("dark");
-        if (document.documentElement.classList.contains("dark")) {
-          themeIcon.classList.replace("fa-moon", "fa-sun");
-        } else {
-          themeIcon.classList.replace("fa-sun", "fa-moon");
-        }
+      <label class="block mb-3 text-sm font-medium" for="fTitle">Project name
+        <input id="fTitle" required maxlength="80" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" placeholder="Dura Lopa Web App" />
+      </label>
+
+      <div class="grid grid-cols-2 gap-3">
+        <label class="block mb-3 text-sm font-medium" for="fYear">Year
+          <input id="fYear" type="number" min="2000" max="2100" required class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" />
+        </label>
+        <label class="block mb-3 text-sm font-medium" for="fCat">Category
+          <select id="fCat" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-white dark:bg-[#14231f] px-3 py-2">
+            <option>Mobile</option><option>Web</option><option>AI / ML</option><option>Community</option><option>Other</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="block mb-3 text-sm font-medium" for="fDesc">Short description
+        <textarea id="fDesc" required maxlength="220" rows="3" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" placeholder="What it does and who it helps, in one or two sentences."></textarea>
+      </label>
+
+      <label class="block mb-3 text-sm font-medium" for="fTags">Technologies (comma separated)
+        <input id="fTags" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" placeholder="Flutter, SQLite" />
+      </label>
+
+      <div class="grid grid-cols-[1fr_2fr] gap-3">
+        <label class="block mb-3 text-sm font-medium" for="fLabel">Link text
+          <input id="fLabel" maxlength="24" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" placeholder="View app" />
+        </label>
+        <label class="block mb-3 text-sm font-medium" for="fUrl">Link (optional)
+          <input id="fUrl" type="url" class="mt-1 w-full rounded-md border border-ink/25 dark:border-white/25 bg-transparent px-3 py-2" placeholder="https://" />
+        </label>
+      </div>
+
+      <p id="formError" class="text-sm text-red-600 dark:text-red-400 mb-2" role="alert"></p>
+      <div class="flex justify-end gap-2 mt-2">
+        <button type="button" id="cancelAdd" class="px-4 py-2 rounded-md border border-ink/25 dark:border-white/25 font-medium">Cancel</button>
+        <button type="submit" class="px-4 py-2 rounded-md bg-river text-white font-medium hover:bg-river-light">Save project</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    /* ---------- Content (edit these lists to update the site) ---------- */
+    const skills = {
+      lang: [["Java", "fab fa-java"], ["C / C++", "fa-solid fa-code"], ["SQL", "fas fa-database"]],
+      fw: [["React", "fab fa-react"], ["Flutter", "fas fa-mobile-screen-button"], ["Ethereum", "fab fa-ethereum"]],
+      tools: [["Figma", "fab fa-figma"], ["Git and GitHub", "fab fa-github"]],
+    };
+
+    // Permanent projects. Use "Copy as code" in manage mode to add more here.
+    const projects = [
+      {
+        title: "Dura Lopa Web App", year: 2025, category: "Web",
+        desc: "Making Dura language resources accessible in the browser.",
+        tags: [], url: "https://dura-lopa-web.onrender.com/", label: "Open web app", featured: true,
+      },
+      {
+        title: "Dura Lopa App", year: 2024, category: "Mobile",
+        desc: "Offline Dura-Nepali-English dictionary for Android.",
+        tags: ["Mobile", "Offline"],
+        url: "https://play.google.com/store/apps/details?id=org.durapetodss.duralopa&pcampaignid=web_share",
+        label: "Get it on Google Play", featured: true,
+      },
+      {
+        title: "Kirati Cluster App", year: 2024, category: "Community",
+        desc: "Collaborated on a common dictionary for the Kirati group of languages.",
+        tags: [], url: "", label: "",
+      },
+      {
+        title: "Nepali Spell Corrector", year: 2023, category: "AI / ML",
+        desc: "Fine-tuned transformer models for Nepali spelling correction.",
+        tags: ["Transformers", "NLP"], url: "", label: "",
+      },
+    ];
+
+    /* ---------- Helpers ---------- */
+    const $ = (id) => document.getElementById(id);
+    const STORE = "portfolio.projects.v1";
+    const store = {
+      get() { try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch (e) { return []; } },
+      set(v) { try { localStorage.setItem(STORE, JSON.stringify(v)); return true; } catch (e) { return false; } },
+    };
+    function el(tag, cls, text) {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+    function safeUrl(u) {
+      try { const p = new URL(u); return /^https?:$/.test(p.protocol) ? p.href : ""; } catch (e) { return ""; }
+    }
+
+    /* ---------- Skills ---------- */
+    function renderSkills(target, list) {
+      list.forEach(([name, icon]) => {
+        const li = el("li", "flex items-center gap-3");
+        const i = el("i", icon + " w-6 text-center text-river dark:text-emerald-300");
+        i.setAttribute("aria-hidden", "true");
+        li.append(i, el("span", "", name));
+        target.append(li);
       });
-    </script>
-  </body>
+    }
+    renderSkills($("skillsLang"), skills.lang);
+    renderSkills($("skillsFw"), skills.fw);
+    renderSkills($("skillsTools"), skills.tools);
+
+    /* ---------- Projects ---------- */
+    let activeFilter = "All";
+
+    function allProjects() {
+      const local = store.get().map((p) => ({ ...p, local: true }));
+      return [...projects, ...local].sort((a, b) => b.year - a.year);
+    }
+
+    function renderFilters(list) {
+      const cats = ["All", ...new Set(list.map((p) => p.category).filter(Boolean))];
+      if (!cats.includes(activeFilter)) activeFilter = "All";
+      const box = $("filters");
+      box.replaceChildren();
+      cats.forEach((c) => {
+        const b = el("button", "px-3 py-1.5 rounded-full text-sm font-medium border transition", c);
+        b.type = "button";
+        const on = c === activeFilter;
+        b.setAttribute("aria-pressed", on);
+        b.className += on
+          ? " bg-river text-white border-river"
+          : " border-ink/25 dark:border-white/25 hover:bg-ink/5 dark:hover:bg-white/10";
+        b.addEventListener("click", () => { activeFilter = c; renderProjects(); });
+        box.append(b);
+      });
+    }
+
+    function card(p) {
+      const art = el("article", "flex flex-col rounded-lg bg-white dark:bg-[#14231f] border border-ink/10 dark:border-white/10 p-6");
+      const top = el("div", "flex items-baseline justify-between gap-3");
+      top.append(el("h3", "font-display text-xl font-bold text-river dark:text-emerald-300", p.title), el("span", "text-sm text-ink/60 dark:text-gray-400 shrink-0", String(p.year)));
+      art.append(top);
+      art.append(el("p", "mt-2 text-ink/75 dark:text-gray-300", p.desc));
+
+      const meta = el("div", "mt-3 flex flex-wrap gap-2");
+      if (p.category) meta.append(el("span", "text-xs font-semibold px-2 py-1 rounded bg-river/10 text-river dark:bg-emerald-300/15 dark:text-emerald-200", p.category));
+      (p.tags || []).forEach((t) => meta.append(el("span", "text-xs px-2 py-1 rounded border border-ink/15 dark:border-white/20", t)));
+      art.append(meta);
+
+      const foot = el("div", "mt-auto pt-4 flex items-center justify-between gap-3");
+      const href = safeUrl(p.url);
+      if (href) {
+        const a = el("a", "text-sm font-semibold text-river dark:text-emerald-300 hover:underline", p.label || "View project");
+        a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+        foot.append(a);
+      } else {
+        foot.append(el("span", "text-sm text-ink/50 dark:text-gray-500", "No public link"));
+      }
+      if (p.local && document.body.dataset.admin === "1") {
+        const d = el("button", "text-sm text-red-600 dark:text-red-400 hover:underline", "Remove");
+        d.type = "button";
+        d.setAttribute("aria-label", "Remove " + p.title);
+        d.addEventListener("click", () => {
+          if (!confirm('Remove "' + p.title + '" from this browser?')) return;
+          store.set(store.get().filter((x) => x.id !== p.id));
+          renderProjects();
+          say("Removed.");
+        });
+        foot.append(d);
+      }
+      art.append(foot);
+      return art;
+    }
+
+    function renderProjects() {
+      const list = allProjects();
+      renderFilters(list);
+      const shown = list.filter((p) => activeFilter === "All" || p.category === activeFilter);
+      const grid = $("projectGrid");
+      grid.replaceChildren(...shown.map(card));
+      $("emptyState").classList.toggle("hidden", shown.length > 0);
+    }
+
+    /* ---------- Owner panel ---------- */
+    function say(msg) { $("adminMsg").textContent = msg; }
+
+    function syncAdmin() {
+      const on = location.hash === "#admin";
+      document.body.dataset.admin = on ? "1" : "0";
+      $("adminPanel").classList.toggle("hidden", !on);
+      renderProjects();
+      if (on) $("adminPanel").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    window.addEventListener("hashchange", syncAdmin);
+    $("closeAdmin").addEventListener("click", () => { history.replaceState(null, "", location.pathname); syncAdmin(); });
+
+    const modal = $("modal");
+    function openModal() {
+      $("projectForm").reset();
+      $("fYear").value = new Date().getFullYear();
+      $("formError").textContent = "";
+      modal.classList.remove("hidden"); modal.classList.add("flex");
+      $("fTitle").focus();
+    }
+    function closeModal() { modal.classList.add("hidden"); modal.classList.remove("flex"); $("openAdd").focus(); }
+    $("openAdd").addEventListener("click", openModal);
+    $("cancelAdd").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal(); });
+
+    $("projectForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const rawUrl = $("fUrl").value.trim();
+      if (rawUrl && !safeUrl(rawUrl)) { $("formError").textContent = "Enter a full link that starts with http:// or https://"; return; }
+      const item = {
+        id: "p" + Date.now(),
+        title: $("fTitle").value.trim(),
+        year: Number($("fYear").value),
+        category: $("fCat").value,
+        desc: $("fDesc").value.trim(),
+        tags: $("fTags").value.split(",").map((t) => t.trim()).filter(Boolean).slice(0, 6),
+        url: rawUrl,
+        label: $("fLabel").value.trim(),
+      };
+      const ok = store.set([...store.get(), item]);
+      if (!ok) { $("formError").textContent = "This browser blocked saving. Try a normal (non-private) window."; return; }
+      closeModal(); renderProjects(); say('Added "' + item.title + '". Use "Copy as code" to make it permanent for all visitors.');
+    });
+
+    function toCode() {
+      return store.get().map(({ id, ...p }) => "      " + JSON.stringify(p) + ",").join("\n");
+    }
+    $("copyCode").addEventListener("click", async () => {
+      const code = toCode();
+      if (!code) return say("Nothing to copy yet. Add a project first.");
+      try { await navigator.clipboard.writeText(code); say("Copied. Paste it inside the projects list in the script."); }
+      catch (e) { say("Copy was blocked by the browser. Use Download JSON instead."); }
+    });
+    $("exportJson").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(store.get(), null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "projects.json"; a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    $("importJson").addEventListener("change", async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      try {
+        const data = JSON.parse(await f.text());
+        if (!Array.isArray(data)) throw new Error();
+        const clean = data.filter((p) => p && p.title && p.year).map((p, i) => ({
+          id: "i" + Date.now() + i, title: String(p.title), year: Number(p.year),
+          category: String(p.category || "Other"), desc: String(p.desc || ""),
+          tags: Array.isArray(p.tags) ? p.tags.map(String) : [], url: safeUrl(p.url || ""), label: String(p.label || ""),
+        }));
+        store.set([...store.get(), ...clean]); renderProjects(); say("Imported " + clean.length + " project(s).");
+      } catch (err) { say("That file is not a valid projects JSON list."); }
+      e.target.value = "";
+    });
+
+    /* ---------- Theme, menu, rotating role ---------- */
+    const themeIcon = $("themeIcon"), themeToggle = $("themeToggle");
+    function syncThemeUi() {
+      const dark = document.documentElement.classList.contains("dark");
+      themeIcon.className = "fas " + (dark ? "fa-sun" : "fa-moon");
+      themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    }
+    themeToggle.addEventListener("click", () => {
+      const dark = document.documentElement.classList.toggle("dark");
+      try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+      syncThemeUi();
+    });
+    syncThemeUi();
+
+    const menuToggle = $("menuToggle"), mobileMenu = $("mobileMenu");
+    menuToggle.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("hidden") === false;
+      menuToggle.setAttribute("aria-expanded", open);
+      menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+    mobileMenu.addEventListener("click", (e) => { if (e.target.tagName === "A") { mobileMenu.classList.add("hidden"); menuToggle.setAttribute("aria-expanded", "false"); } });
+
+    const words = ["developer", "engineer", "designer", "researcher"];
+    const roleEl = $("roleWord");
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let w = 0;
+      setInterval(() => {
+        roleEl.classList.add("hide");
+        setTimeout(() => { w = (w + 1) % words.length; roleEl.textContent = words[w]; roleEl.classList.remove("hide"); }, 500);
+      }, 2600);
+    }
+
+    $("year").textContent = new Date().getFullYear();
+    syncAdmin();
+  </script>
+</body>
 </html>
